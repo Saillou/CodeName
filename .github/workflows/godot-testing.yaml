@@ -6,7 +6,7 @@ on:
 
 jobs:
   smoke-test:
-    name: Import and load project
+    name: Import project and smoke test
     runs-on: ubuntu-latest
 
     env:
@@ -26,5 +26,5 @@ jobs:
       - name: Import assets
         run: ./godot/${GODOT_EXECUTABLE} --headless --path . --import --quit --verbose
 
-      - name: Load project
-        run: ./godot/${GODOT_EXECUTABLE} --headless --path . --quit --verbose
+      - name: Run smoke test
+        run: ./godot/${GODOT_EXECUTABLE} --headless --path . -s res://Scenes/Scripts/dev/smoke_test_runner.gd --verbose
