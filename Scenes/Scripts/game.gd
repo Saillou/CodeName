@@ -2,7 +2,7 @@
 extends Node3D
 
 # Constantes
-const WORDS_PATH   := "./resources/WordList.txt"
+const WORDS_PATH   := "res://resources/WordList.txt"
 const CARD_SCENE   := preload("res://Scenes/Card.tscn")
 const CONFIG :		= preload("res://Scenes/Scripts/game_config.gd")
 const CARD_MARGIN  := 0.1
@@ -15,8 +15,14 @@ var words_pool:Array[String] = []
 func _ready() -> void:	
 	# Read words' file
 	var file = FileAccess.open(WORDS_PATH, FileAccess.READ)
+	if file == null:
+		push_error("Could not open words file: %s" % WORDS_PATH)
+		return
+
 	for w in file.get_as_text().split("\n"):
-		words_pool.append(w)
+		var word := w.strip_edges()
+		if not word.is_empty():
+			words_pool.append(word)
 
 	# Create color pool
 	for i in range(8):
@@ -29,11 +35,8 @@ func _ready() -> void:
 	for y in range(0, CONFIG.N_COLS):
 		for x in range(0, CONFIG.N_ROWS):
 			var card: CardElement = CARD_SCENE.instantiate() as CardElement
-			var card_pos:= Vector3(0, 0, 0)
-			card_pos.x = (CARD_MARGIN + card.width())*(x - (CONFIG.N_ROWS-1.0)/2.0)
-			card_pos.y = (CARD_MARGIN + card.height())*((CONFIG.N_COLS-1.0)/2.0 - y)
-			card.position = card_pos
 			card.data.index = x + y * CONFIG.N_ROWS
+			card.position = _card_grid_position(card, x, y)
 			card.flipped.connect(_flipped)
 			add_child(card)
 
@@ -47,6 +50,14 @@ func _ready() -> void:
 func _randomize_pools() -> void:
 	color_pool.shuffle()
 	words_pool.shuffle()
+
+func _card_grid_position(card: CardElement, x: int, y: int) -> Vector3:
+	var step := card.size() + Vector2(CARD_MARGIN, CARD_MARGIN)
+	return Vector3(
+		step.x * (x - (CONFIG.N_ROWS - 1.0) / 2.0),
+		step.y * ((CONFIG.N_COLS - 1.0) / 2.0 - y),
+		0.0
+	)
 
 func _generate_card_values(delay_between_cards: float = 0.03) -> void:
 	%Answer.clear_data()
