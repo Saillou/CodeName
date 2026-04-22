@@ -4,7 +4,7 @@ extends Node3D
 # Constantes
 const WORDS_PATH   := "res://resources/WordList.txt"
 const CARD_SCENE   := preload("res://Scenes/Card.tscn")
-const CONFIG :		= preload("res://Scenes/Scripts/game_config.gd")
+const CONFIG 	   := preload("res://Scenes/Scripts/game_config.gd")
 const CARD_MARGIN  := 0.1
 
 # State
