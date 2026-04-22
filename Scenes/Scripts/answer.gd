@@ -3,12 +3,10 @@ extends Window
 class_name GameAnswer
 
 # Constantes
-const GAP_WINDOW := 16
-const N_ROWS 	 := 5
-const N_COLS 	 := 5
+const CONFIG 	 := preload("res://Scenes/Scripts/game_config.gd")
 const CELL_SIZE  := Vector2i(50, 30)
 const MARGIN     := Vector2i(50, 50)
-const COLOR_GRAY := Color(0.7, 0.7, 0.7, 1.0)
+const GAP_WINDOW := 16
 
 # Engine
 func _ready() -> void:
@@ -25,7 +23,7 @@ func clear_data() -> void:
 			continue
 			
 		var rect := ColorRect.new()
-		rect.color = COLOR_GRAY
+		rect.color = CONFIG.COLOR_GRAY
 		rect.custom_minimum_size = CELL_SIZE
 		%Grid.add_child(rect)
 
@@ -56,7 +54,10 @@ func _place_next_to_main() -> void:
 		main_window.position.x + main_window.size.x + GAP_WINDOW,
 		main_window.position.y
 	)
-	size = Vector2i(N_ROWS * CELL_SIZE.x + 4, N_COLS * CELL_SIZE.y + 4) + MARGIN
+	size = Vector2i(
+		CONFIG.N_ROWS * CELL_SIZE.x + 4, 
+		CONFIG.N_COLS * CELL_SIZE.y + 4
+	) + MARGIN
 
 # Tricks to place the window
 func _late_init() -> void:

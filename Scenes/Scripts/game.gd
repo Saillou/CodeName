@@ -4,12 +4,7 @@ extends Node3D
 # Constantes
 const WORDS_PATH   := "./resources/WordList.txt"
 const CARD_SCENE   := preload("res://Scenes/Card.tscn")
-const COLOR_GRAY   := Color(0.7, 0.7, 0.7, 1.0)
-const COLOR_RED    := Color(1.0, 0.2, 0.3, 1.0)
-const COLOR_BLUE   := Color(0.3, 0.2, 1.0, 1.0)
-const COLOR_BLACK  := Color(0.15, 0.15, 0.15, 1.0)
-const N_ROWS 	   := 5
-const N_COLS 	   := 5
+const CONFIG :		= preload("res://Scenes/Scripts/game_config.gd")
 const CARD_MARGIN  := 0.1
 
 # State
@@ -25,20 +20,20 @@ func _ready() -> void:
 
 	# Create color pool
 	for i in range(8):
-		color_pool.append(COLOR_BLUE)
-		color_pool.append(COLOR_RED)
-		color_pool.append(COLOR_GRAY)
-	color_pool.append(COLOR_BLACK)	
+		color_pool.append(CONFIG.COLOR_BLUE)
+		color_pool.append(CONFIG.COLOR_RED)
+		color_pool.append(CONFIG.COLOR_GRAY)
+	color_pool.append(CONFIG.COLOR_BLACK)	
 
 	# Create cards
-	for y in range(0, N_COLS):
-		for x in range(0, N_ROWS):
+	for y in range(0, CONFIG.N_COLS):
+		for x in range(0, CONFIG.N_ROWS):
 			var card: CardElement = CARD_SCENE.instantiate() as CardElement
 			var card_pos:= Vector3(0, 0, 0)
-			card_pos.x = (CARD_MARGIN + card.width())*(x - (N_ROWS-1.0)/2.0)
-			card_pos.y = (CARD_MARGIN + card.height())*((N_COLS-1.0)/2.0 - y)
+			card_pos.x = (CARD_MARGIN + card.width())*(x - (CONFIG.N_ROWS-1.0)/2.0)
+			card_pos.y = (CARD_MARGIN + card.height())*((CONFIG.N_COLS-1.0)/2.0 - y)
 			card.position = card_pos
-			card.data.index = x + y * N_ROWS
+			card.data.index = x + y * CONFIG.N_ROWS
 			card.flipped.connect(_flipped)
 			add_child(card)
 
@@ -64,7 +59,7 @@ func _generate_card_values(delay_between_cards: float = 0.03) -> void:
 
 		var card: CardElement = node as CardElement
 		card.reset_face()
-		card.set_back_color(COLOR_GRAY * 0.6)
+		card.set_back_color(CONFIG.COLOR_GRAY * 0.6)
 		card.set_front_color(color_pool[card.data.index])
 		card.set_text(words_pool[card.data.index])
 

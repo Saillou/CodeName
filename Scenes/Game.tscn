@@ -14,6 +14,9 @@ script = ExtResource("1_xkndl")
 
 [node name="Answer" parent="." unique_id=1337626373 instance=ExtResource("2_j5yw3")]
 unique_name_in_owner = true
+size = Vector2i(304, 204)
+unresizable = true
+maximize_disabled = true
 
 [node name="Audio" type="Node" parent="." unique_id=1936011013]
 
