@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://ccwpv05fjn3mr"]
+
+[ext_resource type="Script" uid="uid://b3jwlu6m5u3qv" path="res://Scenes/Scripts/card.gd" id="1_dd2wi"]
+[ext_resource type="Script" uid="uid://ckupwbb0gngcy" path="res://Scenes/Scripts/card_area.gd" id="2_hael8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u4fkt"]
+resource_local_to_scene = true
+albedo_color = Color(0.29411766, 0.29411766, 0.29411766, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_u4fkt"]
+size = Vector2(2, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dd2wi"]
+resource_local_to_scene = true
+albedo_color = Color(0.6862745, 0.6862745, 0.6862745, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_dd2wi"]
+size = Vector2(2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u4fkt"]
+margin = 0.1
+size = Vector3(2, 1, 0.03)
+
+[node name="Card" type="Node3D" unique_id=1184304302 groups=["Cards"]]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("1_dd2wi")
+
+[node name="Front" type="MeshInstance3D" parent="." unique_id=353696380]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.01)
+material_override = SubResource("StandardMaterial3D_u4fkt")
+mesh = SubResource("QuadMesh_u4fkt")
+
+[node name="Text" type="Label3D" parent="Front" unique_id=897737137]
+transform = Transform3D(-1, -8.742278e-08, -3.019916e-07, 8.742278e-08, -1, 1.3200472e-14, -3.019916e-07, -1.3200472e-14, 1, 0, 0, 0.050000004)
+text = "Front"
+
+[node name="Back" type="MeshInstance3D" parent="." unique_id=433762474]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -0.01)
+material_override = SubResource("StandardMaterial3D_dd2wi")
+mesh = SubResource("QuadMesh_dd2wi")
+
+[node name="Text" type="Label3D" parent="Back" unique_id=912772437]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
+text = "Back"
+
+[node name="MouseArea" type="Area3D" parent="." unique_id=570767322]
+unique_name_in_owner = true
+script = ExtResource("2_hael8")
+
+[node name="Shape" type="CollisionShape3D" parent="MouseArea" unique_id=953921853]
+shape = SubResource("BoxShape3D_u4fkt")
