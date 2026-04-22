@@ -24,7 +24,7 @@ jobs:
           chmod +x "godot/${GODOT_EXECUTABLE}"
 
       - name: Import assets
-        run: ./godot/${GODOT_EXECUTABLE} --headless --path . --import --quit
+        run: ./godot/${GODOT_EXECUTABLE} --headless --path . --import --quit --verbose
 
       - name: Load project
-        run: ./godot/${GODOT_EXECUTABLE} --headless --path . --quit
+        run: ./godot/${GODOT_EXECUTABLE} --headless --path . --quit --verbose
