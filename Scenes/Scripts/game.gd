@@ -75,7 +75,8 @@ func _generate_card_values(delay_between_cards: float = 0.03) -> void:
 		card.set_text(words_pool[card.data.index])
 
 		if delay_between_cards > 0:
-			await get_tree().create_timer(delay_between_cards).timeout
+			%CardDelay.start(delay_between_cards)
+			await %CardDelay.timeout
 
 	%Answer.refresh_data()
 
