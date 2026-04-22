@@ -32,11 +32,14 @@ func set_front_color(color: Color) -> void:
 	data.color = color
 	_edit_color(%Front, color)
 
+func size() -> Vector2:
+	return (%Front.mesh as QuadMesh).size
+
 func width() -> float:
-	return 2.0
+	return size().x
 
 func height() -> float:
-	return 1.0
+	return size().y
 
 func reset_face() -> void:
 	if not _flipped:
